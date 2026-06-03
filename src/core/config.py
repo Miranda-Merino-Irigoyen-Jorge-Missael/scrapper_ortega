@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# # ============================================
+# ============================================
 # PROJECT PATHS & ENVIRONMENT
 # ============================================
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -64,8 +64,8 @@ PW_USER_DATA_DIR.mkdir(parents=True, exist_ok=True)
 # Headless mode (True = no visible browser window)
 PW_HEADLESS = os.getenv("PW_HEADLESS", "true").lower() == "true"
 
-# Global timeout in milliseconds (30s is safer for Cloud Run)
-PW_TIMEOUT_MS = int(os.getenv("PW_TIMEOUT_MS", "30000"))
+# Global timeout in milliseconds (Aumentado a 60s para soportar cold starts en Cloud Run)
+PW_TIMEOUT_MS = int(os.getenv("PW_TIMEOUT_MS", "60000"))
 
 # Resource types to block for better performance
 PW_BLOCK_RESOURCES = os.getenv(

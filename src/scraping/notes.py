@@ -36,17 +36,19 @@ def extract_case_notes(
 
     notes_url = f"{base_url}/{entity_id}/notes"
     logger.info("Navegando a la URL de notas: %s", notes_url)
+    
+    logger.info("new version of extract_case_notes with explicit timeouts and improved selectors")
 
-    # 1. Navegar a la URL de notas
-    response = page.goto(notes_url, wait_until="domcontentloaded")
+    # 1. Navegar a la URL de notas (Timeout explícito inyectado)
+    response = page.goto(notes_url, wait_until="domcontentloaded", timeout=settings.PW_TIMEOUT_MS)
     
     if not response or response.status == 404:
         logger.error("No se pudo cargar la página de notas para el caso %s (404)", entity_id)
         return []
 
-    # Esperar a que la tabla de notas sea visible
+    # Esperar a que la tabla de notas sea visible (Timeout explícito inyectado)
     try:
-        page.wait_for_selector("tr.notes_item", timeout=10000)
+        page.wait_for_selector("tr.notes_item", timeout=settings.PW_TIMEOUT_MS)
     except Exception:
         logger.warning("No se encontraron elementos 'tr.notes_item' en la página.")
         # Podría ser que no haya notas, retornamos lista vacía
@@ -103,7 +105,8 @@ def extract_case_details(
     logger.info("Extracting case details from: %s", url)
 
     try:
-        response = page.goto(url, wait_until="domcontentloaded")
+        # Timeout explícito inyectado
+        response = page.goto(url, wait_until="domcontentloaded", timeout=settings.PW_TIMEOUT_MS)
 
         if not response or response.status == 404:
             logger.warning("Case %d not found", case_id)
