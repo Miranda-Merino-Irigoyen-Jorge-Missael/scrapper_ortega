@@ -40,7 +40,7 @@ def extract_case_notes(
     logger.info("new version of extract_case_notes with explicit timeouts and improved selectors")
 
     # 1. Navegar a la URL de notas (Timeout explícito inyectado)
-    response = page.goto(notes_url, wait_until="domcontentloaded", timeout=settings.PW_TIMEOUT_MS)
+    response = page.goto(notes_url, wait_until="commit", timeout=settings.PW_TIMEOUT_MS)
     
     if not response or response.status == 404:
         logger.error("No se pudo cargar la página de notas para el caso %s (404)", entity_id)

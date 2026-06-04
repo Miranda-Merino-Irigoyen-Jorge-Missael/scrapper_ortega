@@ -14,6 +14,9 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
+#ROMPEMOS EL CACHÉ
+ENV CACHE_BUSTER=20260603_1500
+
 # Copia el código
 COPY . .
 
