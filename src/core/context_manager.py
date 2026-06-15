@@ -207,7 +207,7 @@ def mycase_session_state() -> Generator[Page, None, None]:
             p, browser, context, page = _create_state_context(state_path)
             
             # Verify session
-            page.goto(config.MYCASE_BASE_URL, wait_until="domcontentloaded", timeout=30_000)
+            page.goto(config.MYCASE_BASE_URL, wait_until="domcontentloaded", timeout=config.PW_TIMEOUT_MS)
             if not check_session_active(page):
                 raise SessionExpiredError("Session state is expired or invalid.")
 
